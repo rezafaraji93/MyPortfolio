@@ -12,6 +12,7 @@ plugins {
 }
 
 kotlin {
+    task("testClasses")
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
