@@ -1,0 +1,18 @@
+<resources>
+    <string name="my_name">Reza Faraji</string>
+    <string name="android_developer">Android Developer</string>
+    <string name="view_cv">View CV</string>
+    <string name="about_me">About Me</string>
+    <string name="about_me_description">Android Developer with 6 years of experience in designing, developing, testing, and maintaining cutting-edge Android apps for e-commerce and crypto exchange industries. Proficient in Kotlin and Jetpack Compose for native Android development, with expertise in Kotlin Multiplatform (KMP) for cross-platform applications. Contributed to the development of Bit24, a flagship crypto exchange app with over 500,000 users, and achieved notable improvements in efficiency and User Satisfaction.</string>
+    <string name="experiences">Experiences</string>
+    <string name="bit24_info">Bit 24 - Tehran, Iran</string>
+    <string name="bit24_duration">August 2022 – Present</string>
+    <string name="bit24_description">As an Android Developer at Bit24, I led the transition from Flutter to Kotlin, significantly boosting app performance and user experience. I mentored a junior developer in Jetpack Compose and Kotlin Multiplatform Mobile (KMM) within a month. My efforts in code reviews, refactoring, and implementing a new UI design resulted in a 20% reduction in APK size and a 25% increase in daily active users. Additionally, I improved app performance by 40% through benchmark testing and baseline profiling and optimized real-time data updates using Ktor web sockets. I actively participated in a Scrum team, documented application architecture, and conducted workshops to enhance team knowledge in Android development.</string>
+    <string name="raybit_info">Raybit - Tabriz, Iran</string>
+    <string name="raybit_duration">December 2020 – August 2022</string>
+    <string name="raybit_description">At Raybit, as an Android Developer, I played a key role in developing a user-friendly UI for the RayBit crypto exchange, benefiting over 100,000 users. I led a team of three developers, collaborated with design and backend teams, and integrated third-party APIs for real-time data updates. My code reviews and unit testing efforts led to a 20% reduction in post-release bugs, and performance optimization reduced average load times by 30%. Integrating Firebase Analytics provided valuable insights into user behavior and app performance.</string>
+    <string name="hopesky_info">Hopesky LLC - Georgia, USA (Remote)</string>
+    <string name="hopesky_duration">October 2018 – December 2020</string>
+    <string name="hopesky_info_description">As a Junior Android Developer at Hopesky LLC, I led the development of six Android applications for the healthcare industry, improving patient engagement and medical processes. Working in a Scrum team of five, I identified and resolved critical issues, ensuring high application stability and performance for users. My role involved close collaboration with team members to deliver high-quality healthcare solutions.</string>
+    <string name="junior_android_developer">Junior Android Developer</string>
+</resources>
