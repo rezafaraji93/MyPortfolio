@@ -1,7 +1,9 @@
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,18 +18,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import component.DescriptionComponent
 import component.ExperienceItem
 import component.LinkIcon
 import component.TitleComponent
+import component.TopSection
 import model.Experience
 import model.LinkType
 import myportfolio.composeapp.generated.resources.Res
@@ -44,116 +53,65 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import theme.AppTheme
 import util.MY_RESUME_URL
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 @Preview
 fun App() {
-    AppTheme {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                listOf(
-                                    Color(0XFF6a11cb),
-                                    Color(0XFF2575fc)
-                                )
-                            )
-                        )
-                        .padding(horizontal = 20.dp)
-                        .padding(top = 100.dp, bottom = 40.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
 
-                    Image(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .size(200.dp)
-                            .border(
-                                width = 4.dp,
-                                color = Color.White,
-                                shape = CircleShape
-                            ),
-                        painter = painterResource(Res.drawable.my_img),
-                        contentDescription = null
+    AppTheme {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            containerColor = MaterialTheme.colorScheme.background
+        ) { paddingValues ->
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
+                item {
+                    TopSection()
+                }
+                item {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    TitleComponent(
+                        title = stringResource(Res.string.about_me)
+
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    Text(
-                        text = stringResource(Res.string.my_name),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.White
+                    DescriptionComponent(
+                        description = stringResource(Res.string.about_me_description)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(Res.string.android_developer),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
+                }
+                item {
+                    Spacer(modifier = Modifier.height(40.dp))
+                    TitleComponent(
+                        title = stringResource(Res.string.experiences)
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Button(
-                        content = {
-                            Text(text = stringResource(Res.string.view_cv))
-                        },
-                        onClick = {
-                            openUrl(MY_RESUME_URL)
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Blue,
-                            contentColor = Color.White
-                        ),
-                        modifier = Modifier.height(48.dp).clip(RoundedCornerShape(8.dp))
+                }
+                item {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ExperienceItem(
+                        experience = Experience.Bit24
                     )
-                    Spacer(Modifier.height(24.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        LinkIcon(
-                            linkType = LinkType.LinkedIn
-                        )
-                        LinkIcon(
-                            linkType = LinkType.Github
-                        )
-                    }
+                }
+                item {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ExperienceItem(
+                        experience = Experience.Raybit
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ExperienceItem(
+                        experience = Experience.HopeSky
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
             }
-            item {
-                Spacer(modifier = Modifier.height(40.dp))
-                TitleComponent(
-                    title = stringResource(Res.string.about_me)
-
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                DescriptionComponent(
-                    description = stringResource(Res.string.about_me_description)
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(40.dp))
-                TitleComponent(
-                    title = stringResource(Res.string.experiences)
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                ExperienceItem(
-                    experience = Experience.Bit24
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                ExperienceItem(
-                    experience = Experience.Raybit
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                ExperienceItem(
-                    experience = Experience.HopeSky
-                )
-            }
         }
+
     }
 }
 

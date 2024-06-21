@@ -1,5 +1,6 @@
 package component
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,56 +18,94 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import model.Experience
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import util.windowSize
 
 @Composable
 fun ExperienceItem(
     modifier: Modifier = Modifier,
     experience: Experience
 ) {
+
+    val animatedHorizontalPadding by animateDpAsState(
+        when (windowSize()) {
+            WindowWidthSizeClass.Compact -> 20.dp
+            WindowWidthSizeClass.Medium -> 48.dp
+            else -> 200.dp
+        }
+    )
+
     Card(
         modifier = modifier
-            .padding(horizontal = 200.dp)
+            .padding(horizontal = animatedHorizontalPadding)
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
         ),
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 12.dp,
             hoveredElevation = 16.dp
         ),
-        shape = RoundedCornerShape(24.dp)
+        shape = RoundedCornerShape(8.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(.5f)
-                    .padding(20.dp)
-            ) {
-                ExperienceTitleSection(experience = experience)
-                Spacer(modifier = Modifier.height(16.dp))
-                ExperienceDescription(description = experience.description)
+        when(windowSize()) {
+            WindowWidthSizeClass.Compact -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                ) {
+                    ExperienceTitleSection(experience = experience)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ExperienceDescription(description = experience.description)
+                    Image(
+                        painter = painterResource(experience.image),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                    )
+                }
             }
-            Image(
-                painter = painterResource(experience.image),
-                contentDescription = null,
-                modifier = Modifier
-                    .weight(.5f)
-                    .padding(20.dp)
-            )
+            else -> {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .weight(.5f)
+                            .padding(20.dp)
+                    ) {
+                        ExperienceTitleSection(experience = experience)
+                        Spacer(modifier = Modifier.height(16.dp))
+                        ExperienceDescription(description = experience.description)
+                    }
+                    Image(
+                        painter = painterResource(experience.image),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .weight(.4f)
+                            .padding(20.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                    )
+                }
+            }
         }
+
     }
 }
 
@@ -92,7 +131,9 @@ private fun ExperienceTitleSection(
         ) {
             Text(
                 text = stringResource(experience.title),
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Bold
+                )
             )
             Text(
                 text = stringResource(experience.companyNameAndLocation),
@@ -124,7 +165,7 @@ fun ExperienceDescription(
                 .padding(12.dp)
                 .size(8.dp)
                 .clip(CircleShape)
-                .background(Color.Black)
+                .background(MaterialTheme.colorScheme.onSurface)
         )
         Text(
             text = stringResource(description),

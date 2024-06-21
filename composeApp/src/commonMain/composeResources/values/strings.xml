@@ -15,4 +15,9 @@
     <string name="hopesky_duration">October 2018 – December 2020</string>
     <string name="hopesky_info_description">As a Junior Android Developer at Hopesky LLC, I led the development of six Android applications for the healthcare industry, improving patient engagement and medical processes. Working in a Scrum team of five, I identified and resolved critical issues, ensuring high application stability and performance for users. My role involved close collaboration with team members to deliver high-quality healthcare solutions.</string>
     <string name="junior_android_developer">Junior Android Developer</string>
+    <string name="android">Android</string>
+    <string name="kotlin">Kotlin</string>
+    <string name="jetpack_compose">Jetpack\nCompose</string>
+    <string name="cmp">CMP</string>
+    <string name="kmp">KMP</string>
 </resources>

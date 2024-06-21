@@ -3,8 +3,10 @@ package component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import model.LinkType
 import openUrl
@@ -17,7 +19,7 @@ fun LinkIcon(
 
     Image(painter = painterResource(linkType.icon),
         contentDescription = null,
-        modifier = modifier.size(45.dp).clickable {
+        modifier = modifier.size(45.dp).clip(CircleShape).clickable {
                 openUrl(linkType.linkUrl)
             })
 
