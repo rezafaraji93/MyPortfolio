@@ -11,12 +11,12 @@ sealed class LinkType(
     val icon: DrawableResource,
     val linkUrl: String
 ) {
-    data object LinkedIn: LinkType(
+    data class LinkedIn(val url: String?): LinkType(
         icon = Res.drawable.linkedin,
-        linkUrl = LINKEDIN_URL
+        linkUrl = url ?: LINKEDIN_URL
     )
-    data object Github: LinkType(
+    data class Github(val url: String?): LinkType(
         icon = Res.drawable.github,
-        linkUrl = GITHUB_URL
+        linkUrl = url ?: GITHUB_URL
     )
 }

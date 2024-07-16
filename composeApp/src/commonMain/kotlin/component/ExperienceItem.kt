@@ -1,7 +1,6 @@
 package component
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,10 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import model.Experience
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import core.domain.Experience
 import util.windowSize
 
 @Composable
@@ -67,12 +63,17 @@ fun ExperienceItem(
                         .fillMaxWidth()
                         .padding(20.dp)
                 ) {
-                    ExperienceTitleSection(experience = experience)
+                    ExperienceTitleSection(
+                        logo = experience.companyLogo,
+                        name = experience.companyName,
+                        location = experience.location,
+                        duration = experience.period,
+                        title = experience.title
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     ExperienceDescription(description = experience.description)
-                    Image(
-                        painter = painterResource(experience.image),
-                        contentDescription = null,
+                    MyAsyncImage(
+                        model = experience.image,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(20.dp)
@@ -90,13 +91,18 @@ fun ExperienceItem(
                             .weight(.5f)
                             .padding(20.dp)
                     ) {
-                        ExperienceTitleSection(experience = experience)
+                        ExperienceTitleSection(
+                            logo = experience.companyLogo,
+                            name = experience.companyName,
+                            location = experience.location,
+                            duration = experience.period,
+                            title = experience.title
+                        )
                         Spacer(modifier = Modifier.height(16.dp))
                         ExperienceDescription(description = experience.description)
                     }
-                    Image(
-                        painter = painterResource(experience.image),
-                        contentDescription = null,
+                    MyAsyncImage(
+                        model = experience.image,
                         modifier = Modifier
                             .weight(.4f)
                             .padding(20.dp)
@@ -112,7 +118,11 @@ fun ExperienceItem(
 @Composable
 private fun ExperienceTitleSection(
     modifier: Modifier = Modifier,
-    experience: Experience
+    logo: String?,
+    title: String,
+    name: String,
+    location: String,
+    duration: String
 ) {
 
     Row(
@@ -121,26 +131,25 @@ private fun ExperienceTitleSection(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Box(modifier = Modifier.size(75.dp), contentAlignment = Alignment.Center) {
-            Image(
-                painter = painterResource(experience.logo),
-                contentDescription = null
+            MyAsyncImage(
+                model = logo
             )
         }
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
-                text = stringResource(experience.title),
+                text = title,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold
                 )
             )
             Text(
-                text = stringResource(experience.companyNameAndLocation),
+                text = "$name - $location",
                 style = MaterialTheme.typography.titleSmall
             )
             Text(
-                text = stringResource(experience.duration),
+                text = duration,
                 style = MaterialTheme.typography.titleSmall,
                 color = Color.Gray
             )
@@ -152,7 +161,7 @@ private fun ExperienceTitleSection(
 @Composable
 fun ExperienceDescription(
     modifier: Modifier = Modifier,
-    description: StringResource
+    description: String
 ) {
 
     Row(
@@ -168,7 +177,7 @@ fun ExperienceDescription(
                 .background(MaterialTheme.colorScheme.onSurface)
         )
         Text(
-            text = stringResource(description),
+            text = description,
             modifier = Modifier.weight(1f),
             style = MaterialTheme.typography.bodyLarge
         )

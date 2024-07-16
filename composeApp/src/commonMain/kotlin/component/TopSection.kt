@@ -8,7 +8,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -39,28 +38,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import model.LinkType
 import myportfolio.composeapp.generated.resources.Res
 import myportfolio.composeapp.generated.resources.android
-import myportfolio.composeapp.generated.resources.android_developer
 import myportfolio.composeapp.generated.resources.cmp
 import myportfolio.composeapp.generated.resources.jetpack_compose
 import myportfolio.composeapp.generated.resources.kmp
 import myportfolio.composeapp.generated.resources.kotlin
-import myportfolio.composeapp.generated.resources.my_img
-import myportfolio.composeapp.generated.resources.my_name
 import myportfolio.composeapp.generated.resources.view_cv
 import openUrl
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import util.MY_RESUME_URL
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun TopSection() {
+fun TopSection(
+    modifier: Modifier = Modifier,
+    profilePicture: String?,
+    title: String,
+    name: String,
+    cvUrl: String?,
+    githubUrl: String?,
+    linkedInUrl: String?
+) {
     val messages = remember {
         listOf(Res.string.android, Res.string.kotlin, Res.string.jetpack_compose, Res.string.cmp, Res.string.kmp)
     }
@@ -83,7 +85,7 @@ fun TopSection() {
     }
 
     BoxWithConstraints(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
     ) {
@@ -98,7 +100,10 @@ fun TopSection() {
         ) { targetMessage ->
             Text(
                 text = stringResource(targetMessage),
-                fontSize = fontSize,
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontSize = fontSize,
+                    lineHeight = 128.sp
+                ),
                 color = MaterialTheme.colorScheme.primary.copy(
                     alpha = 0.1f
                 )
@@ -111,7 +116,7 @@ fun TopSection() {
                 .padding(top = 100.dp, bottom = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
+            MyAsyncImage(
                 modifier = Modifier
                     .clip(CircleShape)
                     .size(200.dp)
@@ -120,12 +125,11 @@ fun TopSection() {
                         color = MaterialTheme.colorScheme.onBackground,
                         shape = CircleShape
                     ),
-                painter = painterResource(Res.drawable.my_img),
-                contentDescription = null
+                model = profilePicture,
             )
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = stringResource(Res.string.my_name),
+                text = name,
                 style = MaterialTheme.typography.headlineLarge.copy(
                     fontWeight = FontWeight.Bold
                 ),
@@ -133,7 +137,7 @@ fun TopSection() {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(Res.string.android_developer),
+                text = title,
                 style = MaterialTheme.typography.headlineSmall.copy(
                     fontWeight = FontWeight.Bold
                 ),
@@ -145,7 +149,7 @@ fun TopSection() {
                     Text(text = stringResource(Res.string.view_cv))
                 },
                 onClick = {
-                    openUrl(MY_RESUME_URL)
+                    openUrl(cvUrl)
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.tertiaryContainer,
@@ -159,10 +163,10 @@ fun TopSection() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 LinkIcon(
-                    linkType = LinkType.LinkedIn
+                    linkType = LinkType.LinkedIn(url = linkedInUrl)
                 )
                 LinkIcon(
-                    linkType = LinkType.Github
+                    linkType = LinkType.Github(url = githubUrl)
                 )
             }
         }
