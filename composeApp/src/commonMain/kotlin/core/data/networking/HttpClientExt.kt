@@ -15,7 +15,7 @@ import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.serialization.SerializationException
 import kotlin.coroutines.cancellation.CancellationException
 
-private const val BASE_URL = "http://0.0.0.0:8081"
+private const val BASE_URL = "http://95.216.167.123"
 
 suspend inline fun <reified Response: Any> HttpClient.get(
     route: String,
