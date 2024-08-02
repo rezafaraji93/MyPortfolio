@@ -84,7 +84,7 @@ fun ExperienceItem(
             else -> {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     Column(
                         modifier = Modifier
@@ -107,6 +107,7 @@ fun ExperienceItem(
                             .weight(.4f)
                             .padding(20.dp)
                             .clip(RoundedCornerShape(16.dp))
+                            .align(Alignment.CenterVertically)
                     )
                 }
             }
