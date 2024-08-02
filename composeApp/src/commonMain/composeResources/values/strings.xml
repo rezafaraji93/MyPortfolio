@@ -20,4 +20,5 @@
     <string name="jetpack_compose">Jetpack\nCompose</string>
     <string name="cmp">CMP</string>
     <string name="kmp">KMP</string>
+    <string name="how_is_it_made">Made with Compose Multiplatform + Ktor Backend</string>
 </resources>
