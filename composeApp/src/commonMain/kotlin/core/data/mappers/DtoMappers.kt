@@ -27,10 +27,13 @@ fun ExperienceDto.toExperience(): Experience = Experience(
     companyName = companyName,
     description = description,
     id = id,
-    image = image,
+    images = images,
     location = location,
     period = period,
-    title = title
+    title = title,
+    summarizedDescription = summarizedDescription,
+    responsibilities = responsibilities,
+    aboutCompany = aboutCompany
 )
 
 fun ProjectDto.toProject(): Project = Project(

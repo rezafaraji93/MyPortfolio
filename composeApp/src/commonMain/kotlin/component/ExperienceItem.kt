@@ -5,10 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -17,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,13 +29,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import core.domain.Experience
+import myportfolio.composeapp.generated.resources.Res
+import myportfolio.composeapp.generated.resources.read_more
+import org.jetbrains.compose.resources.stringResource
 import util.windowSize
 
 @Composable
 fun ExperienceItem(
     modifier: Modifier = Modifier,
-    experience: Experience
+    experience: Experience,
+    onReadMore: (id: String) -> Unit
 ) {
 
     val animatedHorizontalPadding by animateDpAsState(
@@ -71,9 +79,14 @@ fun ExperienceItem(
                         title = experience.title
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    ExperienceDescription(description = experience.description)
+                    ExperienceDescription(
+                        description = experience.summarizedDescription,
+                        onReadMore = {
+                            onReadMore(experience.id)
+                        }
+                    )
                     MyAsyncImage(
-                        model = experience.image,
+                        model = experience.images[0],
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(20.dp)
@@ -99,13 +112,19 @@ fun ExperienceItem(
                             title = experience.title
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        ExperienceDescription(description = experience.description)
+                        ExperienceDescription(
+                            description = experience.description,
+                            onReadMore = {
+                                onReadMore(experience.id)
+                            }
+                        )
                     }
                     MyAsyncImage(
-                        model = experience.image,
+                        model = experience.images[0],
                         modifier = Modifier
                             .weight(.4f)
                             .padding(20.dp)
+                            .heightIn(max = 450.dp)
                             .clip(RoundedCornerShape(16.dp))
                             .align(Alignment.CenterVertically)
                     )
@@ -162,7 +181,8 @@ private fun ExperienceTitleSection(
 @Composable
 fun ExperienceDescription(
     modifier: Modifier = Modifier,
-    description: String
+    description: String,
+    onReadMore: () -> Unit
 ) {
 
     Row(
@@ -177,11 +197,22 @@ fun ExperienceDescription(
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.onSurface)
         )
-        Text(
-            text = description,
-            modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.bodyLarge
-        )
+        Column(modifier = Modifier.fillMaxWidth().weight(1f)) {
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextButton(
+                content = {
+                    Text(
+                        text = stringResource(Res.string.read_more),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                },
+                onClick = onReadMore
+            )
+        }
     }
 
 }

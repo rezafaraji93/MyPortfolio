@@ -16,10 +16,16 @@ data class ExperienceDto(
     val companyName: String,
     @SerialName("description")
     val description: String,
+    @SerialName("summarized_description")
+    val summarizedDescription: String,
+    @SerialName("about_company")
+    val aboutCompany: String,
     @SerialName("id")
     val id: String,
-    @SerialName("image")
-    val image: String,
+    @SerialName("images")
+    val images: List<String>,
+    @SerialName("responsibilities")
+    val responsibilities: List<String>,
     @SerialName("location")
     val location: String,
     @SerialName("period")

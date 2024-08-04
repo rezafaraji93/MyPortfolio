@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-
 package home.presentation
 
 import androidx.compose.animation.Crossfade
@@ -15,7 +13,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,7 +35,10 @@ import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToExperienceDetails: (String) -> Unit
+) {
     val viewModel = koinViewModel<HomeScreenViewModel>()
     val state by viewModel.homeState.collectAsState()
     Crossfade(
@@ -51,7 +51,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         } else {
-            HomeScreenContent(data = state.homeData)
+            HomeScreenContent(
+                data = state.homeData,
+                onNavigateToExperienceDetails = onNavigateToExperienceDetails
+            )
         }
     }
 
@@ -59,7 +62,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun HomeScreenContent(
-    modifier: Modifier = Modifier, data: HomeData
+    modifier: Modifier = Modifier, data: HomeData,
+    onNavigateToExperienceDetails: (String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize()
@@ -93,7 +97,9 @@ fun HomeScreenContent(
         }
         items(data.experiences) { experience ->
             ExperienceItem(
-                modifier = Modifier.padding(vertical = 8.dp), experience = experience
+                modifier = Modifier.padding(vertical = 8.dp),
+                experience = experience,
+                onReadMore = onNavigateToExperienceDetails
             )
         }
         item {
