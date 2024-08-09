@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 fun <T> BaseScreen(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
+    autoPadding: Boolean = true,
     content: @Composable (state: BaseState.Success<T>) -> Unit = {},
     onRetry: () -> Unit,
     state: BaseState<T>
@@ -75,7 +76,7 @@ fun <T> BaseScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(horizontal = animatedHorizontalPadding)
+                    .padding(horizontal = if (autoPadding) animatedHorizontalPadding else 0.dp)
             ) {
                 when (state) {
                     is BaseState.Error -> {

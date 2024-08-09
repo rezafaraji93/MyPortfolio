@@ -2,6 +2,7 @@ package home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import core.domain.BaseState
 import core.domain.util.Result
 import home.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,9 +12,9 @@ import kotlinx.coroutines.launch
 
 class HomeScreenViewModel(
     private val repository: HomeRepository
-): ViewModel() {
+) : ViewModel() {
 
-    private val _homeState = MutableStateFlow(HomeState())
+    private val _homeState = MutableStateFlow<BaseState<HomeState>>(BaseState.Loading(HomeState()))
     val homeState = _homeState.asStateFlow()
 
     init {
@@ -22,26 +23,30 @@ class HomeScreenViewModel(
 
     private fun getHomeData() {
         viewModelScope.launch {
-            _homeState.update { it.copy(isLoading = true) }
-            val result = repository.getHomeDate()
-            _homeState.update { it.copy(isLoading = false) }
-            when(result) {
+            when (val result = repository.getHomeDate()) {
                 is Result.Error -> {
-
+                    _homeState.update {
+                        BaseState.Error(message = "Error occurred! Please try Again")
+                    }
                 }
+
                 is Result.Success -> {
-                    val data = result.data
-                    data?.let { homeData ->
-                        _homeState.update {
-                            it.copy(
+                    val homeData = result.data ?: return@launch
+                    _homeState.update {
+                        BaseState.Success(
+                            HomeState(
                                 homeData = homeData
                             )
-                        }
-
+                        )
                     }
                 }
             }
         }
+    }
+
+    fun onRetry() {
+        _homeState.update { BaseState.Loading() }
+        getHomeData()
     }
 
 
