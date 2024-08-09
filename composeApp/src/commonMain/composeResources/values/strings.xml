@@ -12,4 +12,6 @@
     <string name="about_company">About Company</string>
     <string name="gallery">Gallery</string>
     <string name="my_responsibilities">My Responsibilities</string>
+    <string name="my_projects">My Projects</string>
+    <string name="github_link">Github Link</string>
 </resources>
