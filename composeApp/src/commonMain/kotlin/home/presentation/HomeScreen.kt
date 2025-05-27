@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalLayoutApi::class)
-
 package home.presentation
 
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -29,7 +27,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun HomeScreen(
     onNavigateToExperienceDetails: (String) -> Unit

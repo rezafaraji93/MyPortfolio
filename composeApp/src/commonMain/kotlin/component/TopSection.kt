@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-
 package component
 
 import androidx.compose.animation.AnimatedContent
@@ -25,9 +23,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.window.core.layout.WindowWidthSizeClass
 import kotlinx.coroutines.delay
 import model.LinkType
 import myportfolio.composeapp.generated.resources.Res
@@ -51,8 +47,8 @@ import myportfolio.composeapp.generated.resources.kotlin
 import myportfolio.composeapp.generated.resources.view_cv
 import openUrl
 import org.jetbrains.compose.resources.stringResource
+import util.windowSize
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun TopSection(
     modifier: Modifier = Modifier,
@@ -75,12 +71,11 @@ fun TopSection(
             currentMessageIndex = (currentMessageIndex + 1) % messages.size
         }
     }
-    val windowSizeClass = calculateWindowSizeClass()
 
     // Example of how to change the font size based on the screen width
-    val fontSize = when (windowSizeClass.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> 48.sp
-        WindowWidthSizeClass.Medium -> 90.sp
+    val fontSize = when (windowSize()) {
+        WindowWidthSizeClass.COMPACT -> 48.sp
+        WindowWidthSizeClass.MEDIUM -> 90.sp
         else -> 180.sp
     }
 

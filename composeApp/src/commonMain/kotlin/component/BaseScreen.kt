@@ -13,22 +13,20 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.window.core.layout.WindowWidthSizeClass
 import core.domain.BaseState
 import myportfolio.composeapp.generated.resources.Res
 import myportfolio.composeapp.generated.resources.how_is_it_made
 import myportfolio.composeapp.generated.resources.retry
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun <T> BaseScreen(
     modifier: Modifier = Modifier,
@@ -39,11 +37,11 @@ fun <T> BaseScreen(
     state: BaseState<T>
 ) {
 
-    val windowSizeClass = calculateWindowSizeClass()
+    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
     val animatedHorizontalPadding by animateDpAsState(
-        when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 20.dp
-            WindowWidthSizeClass.Medium -> 48.dp
+        when (windowSizeClass.windowWidthSizeClass) {
+            WindowWidthSizeClass.COMPACT -> 20.dp
+            WindowWidthSizeClass.MEDIUM -> 48.dp
             else -> 200.dp
         }
     )

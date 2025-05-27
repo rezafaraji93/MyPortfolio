@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,7 +19,7 @@ fun ProjectsSection(
 ) {
 
     when(windowSize()) {
-        WindowWidthSizeClass.Expanded -> {
+        WindowWidthSizeClass.EXPANDED -> {
             Row (
                 modifier = modifier
                     .fillMaxWidth()
