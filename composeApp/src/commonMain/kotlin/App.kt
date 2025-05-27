@@ -12,7 +12,6 @@ import androidx.navigation.navArgument
 import androidx.savedstate.read
 import coil3.ImageLoader
 import coil3.PlatformContext
-import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import coil3.util.DebugLogger
@@ -29,7 +28,6 @@ import theme.AppTheme
 fun getAsyncImageLoader(context: PlatformContext) =
     ImageLoader.Builder(context).crossfade(true).logger(DebugLogger()).build()
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 @Preview
 fun App() {
