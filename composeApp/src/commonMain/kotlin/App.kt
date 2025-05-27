@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.savedstate.read
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.annotation.ExperimentalCoilApi
@@ -77,7 +78,7 @@ fun App() {
                     ) { backStackEntry ->
                         ExperienceDetailsScreen(
                             onNavigateUp = navController::navigateUp,
-                            experienceId = backStackEntry.arguments?.getString("id")
+                            experienceId = backStackEntry.arguments?.read { getString("id") }
                         )
                     }
                 }
