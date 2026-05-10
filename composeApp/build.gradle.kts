@@ -10,8 +10,9 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
 }
 
+val projectDirPath = layout.projectDirectory.asFile.path
+
 kotlin {
-    tasks.register("testClasses")
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         outputModuleName = "composeApp"
@@ -21,7 +22,7 @@ kotlin {
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
-                        add(project.projectDir.path)
+                        add(projectDirPath)
                     }
                 }
             }
@@ -120,5 +121,9 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack>().configureEach {
+    notCompatibleWithConfigurationCache("KotlinWebpack task is not compatible with configuration cache due to SoftReference issues.")
 }
 
