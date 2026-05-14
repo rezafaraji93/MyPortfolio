@@ -1,11 +1,10 @@
-package experience_detaills.presentation
+package experience_details.presentation
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import core.domain.BaseState
 import core.domain.util.Result
-import experience_detaills.domain.repository.ExperienceDetailsRepository
+import experience_details.domain.repository.ExperienceDetailsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

@@ -1,6 +1,12 @@
 package component
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,10 +25,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowWidthSizeClass
@@ -39,26 +48,40 @@ fun ExperienceItem(
     experience: Experience,
     onReadMore: (id: String) -> Unit
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isHovered by interactionSource.collectIsHoveredAsState()
+
+    val scale by animateFloatAsState(if (isHovered) 1.01f else 1f)
+    val borderColor by animateColorAsState(
+        if (isHovered) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+        else Color.Transparent
+    )
 
     Card(
         modifier = modifier
             .autoHorizontalPadding()
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .hoverable(interactionSource)
+            .border(2.dp, borderColor, RoundedCornerShape(16.dp)),
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = 12.dp,
-            hoveredElevation = 16.dp
+            defaultElevation = 4.dp,
+            hoveredElevation = 8.dp
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
         when(windowSize()) {
             WindowWidthSizeClass.COMPACT -> {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(20.dp)
+                        .padding(24.dp)
                 ) {
                     ExperienceTitleSection(
                         logo = experience.companyLogo,
@@ -67,7 +90,7 @@ fun ExperienceItem(
                         duration = experience.period,
                         title = experience.title
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
                     ExperienceDescription(
                         description = experience.summarizedDescription,
                         onReadMore = {
@@ -78,20 +101,19 @@ fun ExperienceItem(
                         model = experience.images[0],
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(20.dp)
-                            .clip(RoundedCornerShape(16.dp))
+                            .padding(top = 24.dp)
+                            .clip(RoundedCornerShape(12.dp))
                     )
                 }
             }
             else -> {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.fillMaxWidth().padding(24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
                 ) {
                     Column(
                         modifier = Modifier
-                            .weight(.5f)
-                            .padding(20.dp)
+                            .weight(.6f)
                     ) {
                         ExperienceTitleSection(
                             logo = experience.companyLogo,
@@ -100,7 +122,7 @@ fun ExperienceItem(
                             duration = experience.period,
                             title = experience.title
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
                         ExperienceDescription(
                             description = experience.description,
                             onReadMore = {
@@ -112,9 +134,8 @@ fun ExperienceItem(
                         model = experience.images[0],
                         modifier = Modifier
                             .weight(.4f)
-                            .padding(20.dp)
-                            .heightIn(max = 450.dp)
-                            .clip(RoundedCornerShape(16.dp))
+                            .heightIn(max = 400.dp)
+                            .clip(RoundedCornerShape(12.dp))
                             .align(Alignment.CenterVertically)
                     )
                 }

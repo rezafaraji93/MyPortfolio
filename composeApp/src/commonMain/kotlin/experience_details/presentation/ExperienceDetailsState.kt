@@ -1,4 +1,4 @@
-package experience_detaills.presentation
+package experience_details.presentation
 
 import core.domain.Experience
 

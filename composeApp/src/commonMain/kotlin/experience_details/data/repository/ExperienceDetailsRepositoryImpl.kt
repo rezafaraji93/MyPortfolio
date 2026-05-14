@@ -1,4 +1,4 @@
-package experience_detaills.data.repository
+package experience_details.data.repository
 
 import core.data.dto.ExperienceDto
 import core.data.dto.Response
@@ -8,7 +8,7 @@ import core.domain.Experience
 import core.domain.util.DataError
 import core.domain.util.Result
 import core.domain.util.map
-import experience_detaills.domain.repository.ExperienceDetailsRepository
+import experience_details.domain.repository.ExperienceDetailsRepository
 import io.ktor.client.HttpClient
 
 class ExperienceDetailsRepositoryImpl(

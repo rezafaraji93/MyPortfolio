@@ -1,4 +1,4 @@
-package experience_detaills.domain.repository
+package experience_details.domain.repository
 
 import core.domain.Experience
 import core.domain.util.DataError

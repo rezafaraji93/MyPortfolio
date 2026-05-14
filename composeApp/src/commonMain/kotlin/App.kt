@@ -17,9 +17,9 @@ import coil3.request.crossfade
 import coil3.util.DebugLogger
 import core.Navigation
 import di.networkModule
-import experience_detaills.data.di.experienceDataModule
-import experience_detaills.presentation.ExperienceDetailsScreen
-import experience_detaills.presentation.di.experienceDetailsPresentationDi
+import experience_details.data.di.experienceDataModule
+import experience_details.presentation.ExperienceDetailsScreen
+import experience_details.presentation.di.experienceDetailsPresentationDi
 import home.data.di.homeDataModule
 import home.presentation.HomeScreen
 import org.koin.compose.KoinApplication

@@ -1,6 +1,6 @@
-package experience_detaills.presentation.di
+package experience_details.presentation.di
 
-import experience_detaills.presentation.ExperienceDetailsViewModel
+import experience_details.presentation.ExperienceDetailsViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 

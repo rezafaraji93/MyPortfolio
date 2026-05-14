@@ -13,6 +13,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,9 +41,9 @@ fun <T> BaseScreen(
     val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
     val animatedHorizontalPadding by animateDpAsState(
         when (windowSizeClass.windowWidthSizeClass) {
-            WindowWidthSizeClass.COMPACT -> 20.dp
-            WindowWidthSizeClass.MEDIUM -> 48.dp
-            else -> 200.dp
+            WindowWidthSizeClass.COMPACT -> 0.dp
+            WindowWidthSizeClass.MEDIUM -> 24.dp
+            else -> 0.dp // We will use Box with maxWidth for expanded
         }
     )
 
@@ -58,13 +59,14 @@ fun <T> BaseScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.surfaceContainer)
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                    .padding(horizontal = 20.dp, vertical = 24.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = stringResource(Res.string.how_is_it_made),
                     style = MaterialTheme.typography.labelSmall.copy(
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
             }
@@ -73,36 +75,48 @@ fun <T> BaseScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(horizontal = if (autoPadding) animatedHorizontalPadding else 0.dp)
+                    .padding(paddingValues),
+                contentAlignment = Alignment.TopCenter
             ) {
-                when (state) {
-                    is BaseState.Error -> {
-                        Column(
-                            modifier = Modifier.align(Alignment.Center),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            Text(
-                                text = state.message ?: "",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            ElevatedButton(
-                                content = {
-                                    Text(
-                                        text = stringResource(Res.string.retry)
-                                    )
-                                },
-                                onClick = onRetry
-                            )
+                Box(
+                    modifier = Modifier
+                        .then(
+                            if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
+                                Modifier.widthIn(max = 1200.dp)
+                            } else {
+                                Modifier.fillMaxWidth()
+                            }
+                        )
+                        .padding(horizontal = if (autoPadding) animatedHorizontalPadding else 0.dp)
+                ) {
+                    when (state) {
+                        is BaseState.Error -> {
+                            Column(
+                                modifier = Modifier.align(Alignment.Center).padding(20.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                Text(
+                                    text = state.message ?: "",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                                ElevatedButton(
+                                    content = {
+                                        Text(
+                                            text = stringResource(Res.string.retry)
+                                        )
+                                    },
+                                    onClick = onRetry
+                                )
+                            }
                         }
-                    }
 
-                    is BaseState.Loading -> {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                    }
+                        is BaseState.Loading -> {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        }
 
-                    is BaseState.Success -> content(state)
+                        is BaseState.Success -> content(state)
+                    }
                 }
             }
         }

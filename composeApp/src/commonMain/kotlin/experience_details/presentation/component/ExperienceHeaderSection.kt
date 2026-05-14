@@ -1,4 +1,4 @@
-package experience_detaills.presentation.component
+package experience_details.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -1,6 +1,6 @@
 package home.presentation
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -25,7 +25,7 @@ import myportfolio.composeapp.generated.resources.experiences
 import myportfolio.composeapp.generated.resources.my_projects
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
+import util.appearanceAnimation
 
 @Composable
 fun HomeScreen(
@@ -59,6 +59,7 @@ fun HomeScreenContent(
         ) {
             item {
                 TopSection(
+                    modifier = Modifier.appearanceAnimation(delayMillis = 100),
                     profilePicture = data.profilePicture,
                     title = data.title,
                     name = data.name,
@@ -68,40 +69,48 @@ fun HomeScreenContent(
                 )
             }
             item {
-                Spacer(modifier = Modifier.height(40.dp))
-                TitleComponent(
-                    title = stringResource(Res.string.about_me)
-
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                DescriptionComponent(
-                    description = data.aboutMe
-                )
+                Spacer(modifier = Modifier.height(60.dp))
+                Column(modifier = Modifier.appearanceAnimation(delayMillis = 300)) {
+                    TitleComponent(
+                        title = stringResource(Res.string.about_me)
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    DescriptionComponent(
+                        description = data.aboutMe
+                    )
+                }
             }
             item {
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(60.dp))
                 TitleComponent(
+                    modifier = Modifier.appearanceAnimation(delayMillis = 400),
                     title = stringResource(Res.string.experiences)
                 )
             }
             items(data.experiences) { experience ->
                 ExperienceItem(
-                    modifier = Modifier.padding(vertical = 8.dp),
+                    modifier = Modifier
+                        .padding(vertical = 12.dp)
+                        .appearanceAnimation(delayMillis = 500),
                     experience = experience,
                     onReadMore = onNavigateToExperienceDetails
                 )
             }
             item {
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(60.dp))
                 TitleComponent(
+                    modifier = Modifier.appearanceAnimation(delayMillis = 600),
                     title = stringResource(Res.string.my_projects)
                 )
             }
             item {
-                Spacer(modifier = Modifier.height(20.dp))
-                ProjectsSection(projects = data.projects)
+                Spacer(modifier = Modifier.height(24.dp))
+                ProjectsSection(
+                    modifier = Modifier.appearanceAnimation(delayMillis = 700),
+                    projects = data.projects
+                )
             }
-            item { Spacer(modifier = Modifier.height(24.dp)) }
+            item { Spacer(modifier = Modifier.height(48.dp)) }
 
         }
     })

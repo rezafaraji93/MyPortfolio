@@ -1,6 +1,6 @@
 @file:OptIn(KoinExperimentalAPI::class)
 
-package experience_detaills.presentation
+package experience_details.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,16 +23,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import component.BaseScreen
-import experience_detaills.presentation.component.AboutCompanySection
-import experience_detaills.presentation.component.ExperienceHeaderSection
-import experience_detaills.presentation.component.ExperienceImageGallery
-import experience_detaills.presentation.component.ExperienceResponsibilitiesSection
+import experience_details.presentation.component.AboutCompanySection
+import experience_details.presentation.component.ExperienceHeaderSection
+import experience_details.presentation.component.ExperienceImageGallery
+import experience_details.presentation.component.ExperienceResponsibilitiesSection
 import myportfolio.composeapp.generated.resources.Res
 import myportfolio.composeapp.generated.resources.arrow_back
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
+import util.appearanceAnimation
 
 @Composable
 fun ExperienceDetailsScreen(
@@ -73,24 +74,31 @@ fun ExperienceDetailsScreen(
             modifier = Modifier.fillMaxSize().padding(vertical = 24.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            ExperienceHeaderSection(experience = successState.data.experience)
+            ExperienceHeaderSection(
+                modifier = Modifier.appearanceAnimation(delayMillis = 100),
+                experience = successState.data.experience
+            )
             HorizontalDivider(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp),
-                thickness = 2.dp,
-                color = MaterialTheme.colorScheme.secondary
+                modifier = Modifier.fillMaxWidth().padding(vertical = 32.dp)
+                    .appearanceAnimation(delayMillis = 200),
+                thickness = 1.dp,
+                color = MaterialTheme.colorScheme.outlineVariant
             )
             AboutCompanySection(
+                modifier = Modifier.appearanceAnimation(delayMillis = 300),
                 companyDescription = successState.data.experience?.aboutCompany ?: ""
             )
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(48.dp))
             ExperienceImageGallery(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().appearanceAnimation(delayMillis = 400),
                 images = successState.data.experience?.images
             )
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(48.dp))
             ExperienceResponsibilitiesSection(
+                modifier = Modifier.appearanceAnimation(delayMillis = 500),
                 responsibilities = successState.data.experience?.responsibilities
             )
+            Spacer(modifier = Modifier.height(48.dp))
         }
     }, onRetry = viewModel::onRetry
     )
