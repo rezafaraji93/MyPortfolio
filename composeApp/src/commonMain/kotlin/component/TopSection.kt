@@ -150,12 +150,17 @@ fun TopSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
-                .padding(top = if (windowSize == WindowWidthSizeClass.COMPACT) 80.dp else 120.dp, bottom = 80.dp),
+                .padding(top = if (windowSize == WindowWidthSizeClass.COMPACT) 80.dp else 120.dp, bottom = if (windowSize == WindowWidthSizeClass.COMPACT) 40.dp else 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Glassmorphism Container for Profile
             Box(
                 modifier = Modifier
+                    .then(
+                        if (windowSize == WindowWidthSizeClass.COMPACT) {
+                            Modifier.fillMaxWidth()
+                        } else Modifier
+                    )
                     .clip(RoundedCornerShape(32.dp))
                     .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                     .border(
@@ -205,6 +210,18 @@ fun TopSection(
                         )
                     )
                     Spacer(modifier = Modifier.height(40.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(32.dp)
+                    ) {
+                        LinkIcon(
+                            linkType = LinkType.LinkedIn(url = linkedInUrl)
+                        )
+                        LinkIcon(
+                            linkType = LinkType.Github(url = githubUrl)
+                        )
+                    }
+                    Spacer(Modifier.height(40.dp))
                     Button(
                         content = {
                             Text(
@@ -223,18 +240,6 @@ fun TopSection(
                         shape = RoundedCornerShape(16.dp),
                         elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp)
                     )
-                    Spacer(Modifier.height(40.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(32.dp)
-                    ) {
-                        LinkIcon(
-                            linkType = LinkType.LinkedIn(url = linkedInUrl)
-                        )
-                        LinkIcon(
-                            linkType = LinkType.Github(url = githubUrl)
-                        )
-                    }
                 }
             }
         }
