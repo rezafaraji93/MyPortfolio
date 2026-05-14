@@ -13,8 +13,8 @@ fun main() {
 
     ComposeViewport(body) {
         App(
-            onNavHostReady = {
-                it.bindToBrowserNavigation()
+            onNavHostReady = { navController ->
+                navController.bindToBrowserNavigation()
             }
         )
     }

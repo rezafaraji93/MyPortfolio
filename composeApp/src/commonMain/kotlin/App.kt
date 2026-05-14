@@ -6,17 +6,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import androidx.savedstate.read
+import androidx.navigation.toRoute
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import coil3.util.DebugLogger
+import core.Navigation
 import di.networkModule
 import experience_detaills.data.di.experienceDataModule
 import experience_detaills.presentation.ExperienceDetailsScreen
@@ -61,28 +60,21 @@ fun App(
             ) { paddingValues ->
                 NavHost(
                     navController = navController,
-                    startDestination = "home",
+                    startDestination = Navigation.HomeScreen,
                     modifier = Modifier.fillMaxSize().padding(paddingValues)
                 ) {
-                    composable(route = "home") {
+                    composable<Navigation.HomeScreen> {
                         HomeScreen(
                             onNavigateToExperienceDetails = { id ->
                                 navController.navigate("experience_details/$id")
                             }
                         )
                     }
-                    composable(
-                        route = "experience_details/{id}",
-                        arguments = listOf(
-                            navArgument("id") {
-                                type = NavType.StringType
-                                nullable = false
-                            }
-                        )
-                    ) { backStackEntry ->
+                    composable<Navigation.ExperienceDetailsScreen> { backStackEntry ->
+                        val experienceId = backStackEntry.toRoute<Navigation.ExperienceDetailsScreen>().id
                         ExperienceDetailsScreen(
                             onNavigateUp = navController::navigateUp,
-                            experienceId = backStackEntry.arguments?.read { getString("id") }
+                            experienceId = experienceId
                         )
                     }
                 }
