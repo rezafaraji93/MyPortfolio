@@ -3,7 +3,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,33 +23,37 @@ import experience_detaills.presentation.ExperienceDetailsScreen
 import experience_detaills.presentation.di.experienceDetailsPresentationDi
 import home.data.di.homeDataModule
 import home.presentation.HomeScreen
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
 import theme.AppTheme
 
 fun getAsyncImageLoader(context: PlatformContext) =
     ImageLoader.Builder(context).crossfade(true).logger(DebugLogger()).build()
 
 @Composable
-@Preview
-fun App() {
+fun App(
+    onNavHostReady: suspend (NavController) -> Unit = {}
+) {
 
-    KoinApplication(
-        application = {
-            modules(
-                networkModule,
-                homeDataModule,
-                experienceDataModule,
-                experienceDetailsPresentationDi
-            )
-        }
-    ) {
+    KoinApplication(configuration = koinConfiguration(declaration = {
+        modules(
+            networkModule,
+            homeDataModule,
+            experienceDataModule,
+            experienceDetailsPresentationDi
+        )
+    }), content = {
 
         setSingletonImageLoaderFactory { context ->
             getAsyncImageLoader(context)
         }
 
         val navController = rememberNavController()
+
+        LaunchedEffect(navController) {
+            onNavHostReady(navController)
+        }
+
         AppTheme {
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
@@ -82,7 +88,7 @@ fun App() {
                 }
             }
         }
-    }
+    })
 }
 
 internal expect fun openUrl(url: String?)
