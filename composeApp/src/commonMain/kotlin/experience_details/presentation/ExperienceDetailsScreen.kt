@@ -80,22 +80,22 @@ fun ExperienceDetailsScreen(
             )
             HorizontalDivider(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 32.dp)
-                    .appearanceAnimation(delayMillis = 200),
+                    .appearanceAnimation(delayMillis = 100),
                 thickness = 1.dp,
                 color = MaterialTheme.colorScheme.outlineVariant
             )
             AboutCompanySection(
-                modifier = Modifier.appearanceAnimation(delayMillis = 300),
+                modifier = Modifier.appearanceAnimation(delayMillis = 100),
                 companyDescription = successState.data.experience?.aboutCompany ?: ""
             )
             Spacer(modifier = Modifier.height(48.dp))
             ExperienceImageGallery(
-                modifier = Modifier.fillMaxWidth().appearanceAnimation(delayMillis = 400),
+                modifier = Modifier.fillMaxWidth().appearanceAnimation(delayMillis = 100),
                 images = successState.data.experience?.images
             )
             Spacer(modifier = Modifier.height(48.dp))
             ExperienceResponsibilitiesSection(
-                modifier = Modifier.appearanceAnimation(delayMillis = 500),
+                modifier = Modifier.appearanceAnimation(delayMillis = 100),
                 responsibilities = successState.data.experience?.responsibilities
             )
             Spacer(modifier = Modifier.height(48.dp))

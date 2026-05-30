@@ -70,7 +70,7 @@ fun HomeScreenContent(
             }
             item {
                 Spacer(modifier = Modifier.height(60.dp))
-                Column(modifier = Modifier.appearanceAnimation(delayMillis = 300)) {
+                Column(modifier = Modifier.appearanceAnimation(delayMillis = 200)) {
                     TitleComponent(
                         title = stringResource(Res.string.about_me)
                     )
@@ -83,7 +83,7 @@ fun HomeScreenContent(
             item {
                 Spacer(modifier = Modifier.height(60.dp))
                 TitleComponent(
-                    modifier = Modifier.appearanceAnimation(delayMillis = 400),
+                    modifier = Modifier.appearanceAnimation(delayMillis = 200),
                     title = stringResource(Res.string.experiences)
                 )
             }
@@ -91,7 +91,7 @@ fun HomeScreenContent(
                 ExperienceItem(
                     modifier = Modifier
                         .padding(vertical = 12.dp)
-                        .appearanceAnimation(delayMillis = 500),
+                        .appearanceAnimation(delayMillis = 200),
                     experience = experience,
                     onReadMore = onNavigateToExperienceDetails
                 )
@@ -99,14 +99,14 @@ fun HomeScreenContent(
             item {
                 Spacer(modifier = Modifier.height(60.dp))
                 TitleComponent(
-                    modifier = Modifier.appearanceAnimation(delayMillis = 600),
+                    modifier = Modifier.appearanceAnimation(delayMillis = 200),
                     title = stringResource(Res.string.my_projects)
                 )
             }
             item {
                 Spacer(modifier = Modifier.height(24.dp))
                 ProjectsSection(
-                    modifier = Modifier.appearanceAnimation(delayMillis = 700),
+                    modifier = Modifier.appearanceAnimation(delayMillis = 200),
                     projects = data.projects
                 )
             }
